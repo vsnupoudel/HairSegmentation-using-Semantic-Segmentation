@@ -1,6 +1,5 @@
 import cv2
 
-
 def take_picture(filename):
     cam = cv2.VideoCapture(0)
     cv2.namedWindow("test")
