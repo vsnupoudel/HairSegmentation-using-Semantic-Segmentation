@@ -1,5 +1,6 @@
 import cv2
 from PIL import Image
+import matplotlib.pyplot as plt
 
 def take_picture(filename):
     cam = cv2.VideoCapture(0)
@@ -28,7 +29,7 @@ def take_picture(filename):
 
 def take_video(filename):
     cam = cv2.VideoCapture(0)
-    cv2.namedWindow("test")
+    cv2.namedWindow("Take an image hitting Enter, Hit Esc to go out")
     img_counter = 0
 
     while True:
@@ -36,30 +37,33 @@ def take_video(filename):
         if not ret:
             print("failed to grab frame")
             break
-        cv2.imshow("test", frame)
+
+        cv2.imshow("Take an image hitting Enter, Hit Esc to go out", frame)
 
         k = cv2.waitKey(1)
         if k%256 == 27:
-            # ESC pressed
             print("Escape hit, closing...")
             break
         if k%256 == 13:
             # SPACE pressed
             img_name = "{}_{}.png".format(filename, img_counter)
             cv2.imwrite(img_name, frame)
-            im = Image.open("{}_{}.png".format(filename, img_counter))
             print("{} written!".format(img_name))
             img_counter += 1
+            yield img_name
+
 
 
     cam.release()
     cv2.destroyAllWindows()
 
-    return img_name , im.size
-
-
 if __name__ == "__main__":
-    take_picture('test')
-
+    img_gen = take_video('video_image')
+    for image in img_gen:
+        im= Image.open(image)
+        plt.figure()
+        plt.imshow(im, cmap='gray')
+        plt.pause(1e-1)
+        plt.close()
 
 

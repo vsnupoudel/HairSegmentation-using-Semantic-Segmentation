@@ -37,7 +37,6 @@ class Train_or_Predict():
     def resize_model_to_input_size(self, model_output_image, image_size):
         mask = np.squeeze(model_output_image, axis=(0))
         mask_img = array_to_img(mask).resize(image_size)
-        # mask_img = Image.fromarray(mask).resize(image_size)
         return mask_img
 
     def plot_sample_pictures(self):
