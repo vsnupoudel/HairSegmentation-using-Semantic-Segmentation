@@ -1,4 +1,5 @@
 import cv2
+from PIL import Image
 
 def take_picture(filename):
     cam = cv2.VideoCapture(0)
@@ -21,6 +22,7 @@ def take_picture(filename):
             # SPACE pressed
             img_name = "{}_{}.png".format(filename, img_counter)
             cv2.imwrite(img_name, frame)
+            im = Image.open("{}_{}.png".format(filename, img_counter))
             print("{} written!".format(img_name))
             img_counter += 1
             break
@@ -29,7 +31,7 @@ def take_picture(filename):
 
     cv2.destroyAllWindows()
 
-    return img_name
+    return img_name , im.size
 
 if __name__ == "__main__":
     take_picture('test')
