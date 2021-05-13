@@ -50,20 +50,20 @@ def take_video(filename):
             cv2.imwrite(img_name, frame)
             print("{} written!".format(img_name))
             img_counter += 1
-            yield img_name
-
-
+            yield img_name, cam
 
     cam.release()
     cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     img_gen = take_video('video_image')
-    for image in img_gen:
+    for image,cam in img_gen:
         im= Image.open(image)
         plt.figure()
         plt.imshow(im, cmap='gray')
-        plt.pause(1e-1)
-        plt.close()
+        # plt.show()
+        plt.pause(1)
+        plt.clf()
+
 
 
