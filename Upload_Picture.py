@@ -1,6 +1,8 @@
 import cv2
 from PIL import Image
 import matplotlib.pyplot as plt
+from Plots import ContinuousPlots
+from Train_or_Predict import Train_or_Predict
 
 def take_picture(filename):
     cam = cv2.VideoCapture(0)
@@ -57,13 +59,17 @@ def take_video(filename):
 
 if __name__ == "__main__":
     img_gen = take_video('video_image')
+    obj = ContinuousPlots()
+    fig, ax = obj.figure, obj.axes
+    tp = Train_or_Predict()
     for image,cam in img_gen:
-        im= Image.open(image)
-        plt.figure()
-        plt.imshow(im, cmap='gray')
-        # plt.show()
+        # im= Image.open(image)
+        image = tp.get_mask_from_image_upload(image)
+        image.save('mask.tiff')
+        ax.imshow(image, cmap='gray')
         plt.pause(1)
-        plt.clf()
+        ax.cla()
+
 
 
 

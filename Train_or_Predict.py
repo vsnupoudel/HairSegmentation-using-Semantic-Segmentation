@@ -5,7 +5,7 @@ from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.preprocessing.image import array_to_img
 from keras.models import load_model
-from Upload_Picture import take_picture
+# from Upload_Picture import take_picture
 from PIL import Image
 
 # Using the model we trained using the hair dataset in Unet
@@ -18,12 +18,23 @@ class Train_or_Predict():
         #lod the pretrained model
         model_up = load_model('93_Percent_HairSegmentation.h5')
         # take picture function
-        input_image, image_size = take_picture('my_picture')
+        # input_image, image_size = take_picture('my_picture')
         # resize input image
-        arr = self.resize_input_to_model_size(input_image)
+        # arr = self.resize_input_to_model_size(input_image)
         #predict with model
         output = model_up.predict(arr)
-        print('output', output)
+        # get output image same size as input
+        output_mask = self.resize_model_to_input_size(output, image_size)
+        return output_mask
+
+    def get_mask_from_image_upload(self, image_uploaded):
+        #lod the pretrained model
+        model_up = load_model('93_Percent_HairSegmentation.h5')
+        image_size = Image.open(image_uploaded).size
+        # resize input image
+        arr = self.resize_input_to_model_size(image_uploaded)
+        #predict with model
+        output = model_up.predict(arr)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
@@ -47,9 +58,5 @@ class Train_or_Predict():
 
 
 if __name__ == "__main__":
-    tp = Train_or_Predict()
-    image = tp.get_mask_from_picture()
-    image.save('mask.tiff')
-    plt.imshow(image,cmap='gray')
-    plt.show()
+    pass
 
