@@ -1,8 +1,6 @@
 import cv2
 from PIL import Image
 import matplotlib.pyplot as plt
-from Plots import ContinuousPlots
-from Train_or_Predict import Train_or_Predict
 import time
 import numpy as np
 
@@ -75,43 +73,17 @@ def take_picture_frames_in_video(filename):
         k = cv2.waitKey(1)
         if k % 256 == 27:
             print("Escape hit, closing...")
+            img_name = "{}.png".format(filename)
+            cv2.imwrite(img_name, frame)
+            print("{} written!".format(img_name))
             break
-        time.sleep(1/10)
+
+        time.sleep(1/2)
         img_name = "{}_{}.png".format(filename, img_counter)
-        # print(frame)
-        # cv2.imwrite(img_name, frame)
-        print("{} written!".format(img_name))
+        print("{} array created!".format(img_name))
         img_counter += 1
         yield frame, cam
 
     cam.release()
     cv2.destroyAllWindows()
-
-if __name__ == "__main__":
-    img_gen = take_picture_frames_in_video('video_image')
-    obj = ContinuousPlots()
-    fig, ax = obj.figure, obj.axes
-    tp = Train_or_Predict()
-    for array ,cam in img_gen:
-        mask = tp.get_mask_from_array(array)
-        print(mask)
-    #     # im= Image.open(image)
-    #     image = tp.get_mask_from_image_upload(image)
-    #     image.save('mask.tiff')
-    #     ax.imshow(image, cmap='gray')
-    #     plt.pause(1)
-    #     ax.cla()
-
-
-# from PIL import Image
-# import numpy as np
-#
-# w, h = 512, 512
-# data = np.zeros((h, w, 3), dtype=np.uint8)
-# data[0:256, 0:256] = [255, 0, 0] # red patch in upper left
-# img = Image.fromarray(data, 'RGB')
-# img.save('my.png')
-# img.show()
-
-
 

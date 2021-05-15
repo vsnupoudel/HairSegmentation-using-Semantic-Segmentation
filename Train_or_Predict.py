@@ -11,51 +11,53 @@ from PIL import Image
 from Upload_Picture import take_picture
 
 
-class Train_or_Predict():
+class Train_or_P():
 
-    def __init__(self, image_path='.'):
+    def __init__(self, image_path='.', image_name='video_image.png'):
         self.image_path = image_path
+        self.model_up = load_model('93_Percent_HairSegmentation.h5')
+        self.image_name = 'video_image'
 
     def get_mask_from_picture(self):
-        #lod the pretrained model
-        model_up = load_model('93_Percent_HairSegmentation.h5')
         # take picture function
         input_image, image_size = take_picture('my_picture')
         # resize input image
         arr = self.resize_input_to_model_size(input_image)
         #predict with model
-        output = model_up.predict(arr)
+        output = self.model_up.predict(arr)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
 
     def get_mask_from_image_upload(self, image_uploaded):
-        #lod the pretrained model
-        model_up = load_model('93_Percent_HairSegmentation.h5')
         image_size = Image.open(image_uploaded).size
         # resize input image
         arr = self.resize_input_to_model_size(image_uploaded)
         #predict with model
-        output = model_up.predict(arr)
+        output = self.model_up.predict(arr)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
 
     def get_mask_from_array(self, array_input):
-        #lod the pretrained model
-        model_up = load_model('93_Percent_HairSegmentation.h5')
         image = Image.fromarray(array_input, 'RGB')
-        image_size = (array_input.shape[0], array_input.shape[1])
+        image_size = (array_input.shape[1], array_input.shape[0])
         # resize input image
-        resized = self.resize_input_to_model_size(image)
+        resized = self.resize_input_array_to_model_size(image)
         #predict with model
-        output = model_up.predict(resized)
+        output = self.predict_fn(resized)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
 
     def resize_input_to_model_size(self, input_image):
-        img = load_img(input_image, target_size=(256, 256))
+        img = load_img(input_image, target_size=(256,256))
+        arr = tf.cast(img_to_array(img) / 255.0, tf.float32)
+        arr = np.expand_dims(arr, 0)
+        return arr
+
+    def resize_input_array_to_model_size(self, input_image):
+        img = input_image.resize(size=(256,256))
         arr = tf.cast(img_to_array(img) / 255.0, tf.float32)
         arr = np.expand_dims(arr, 0)
         return arr
@@ -64,6 +66,9 @@ class Train_or_Predict():
         mask = np.squeeze(model_output_image, axis=(0))
         mask_img = array_to_img(mask).resize(image_size)
         return mask_img
+
+    def predict_fn(self, array_input):
+        return self.model_up.predict(array_input)
 
     def plot_sample_pictures(self):
         pass
