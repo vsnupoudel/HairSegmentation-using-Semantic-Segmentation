@@ -89,11 +89,12 @@ def take_picture_frames_in_video(filename):
 
 if __name__ == "__main__":
     img_gen = take_picture_frames_in_video('video_image')
-    # obj = ContinuousPlots()
-    # fig, ax = obj.figure, obj.axes
-    # tp = Train_or_Predict()
-    for image,cam in img_gen:
-        print(image)
+    obj = ContinuousPlots()
+    fig, ax = obj.figure, obj.axes
+    tp = Train_or_Predict()
+    for array ,cam in img_gen:
+        mask = tp.get_mask_from_array(array)
+        print(mask)
     #     # im= Image.open(image)
     #     image = tp.get_mask_from_image_upload(image)
     #     image.save('mask.tiff')
