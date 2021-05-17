@@ -9,9 +9,10 @@ from PIL import Image
 
 # Using the model we trained using the hair dataset in Unet
 from Upload_Picture import take_picture
+from Upload_Picture import upload_from_local
 
 
-class Train_or_P():
+class TrainOrP:
 
     def __init__(self, image_path='.', image_name='video_image.png'):
         self.image_path = image_path
@@ -29,7 +30,8 @@ class Train_or_P():
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
 
-    def get_mask_from_image_upload(self, image_uploaded):
+    def get_mask_from_image_upload(self):
+        image_uploaded = upload_from_local()
         image_size = Image.open(image_uploaded).size
         # resize input image
         arr = self.resize_input_to_model_size(image_uploaded)
@@ -78,5 +80,9 @@ class Train_or_P():
 
 
 if __name__ == "__main__":
-    pass
+    tp = TrainOrP()
+    mask = tp.get_mask_from_image_upload()
+    plt.imshow(mask)
+    plt.show()
+
 

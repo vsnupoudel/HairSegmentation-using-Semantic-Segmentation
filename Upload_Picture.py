@@ -1,8 +1,18 @@
 import cv2
-from PIL import Image
-import matplotlib.pyplot as plt
+from PIL import Image, ImageTk
+from tkinter import filedialog
+from tkinter import *
+# import matplotlib.pyplot as plt
 import time
-import numpy as np
+# import numpy as np
+
+
+def upload_from_local():
+    filename = filedialog.askopenfilename(
+        initialdir=r'C:\Users\admin\Pictures', title='Select a Image File'
+    )
+    return filename
+
 
 def take_picture(filename):
     cam = cv2.VideoCapture(0)
@@ -16,7 +26,7 @@ def take_picture(filename):
             break
         cv2.imshow("test", frame)
         k = cv2.waitKey(1)
-        if k%256 == 13:
+        if k % 256 == 13:
             # SPACE pressed
             img_name = "{}_{}.png".format(filename, img_counter)
             cv2.imwrite(img_name, frame)
@@ -26,7 +36,7 @@ def take_picture(filename):
             break
     cam.release()
     cv2.destroyAllWindows()
-    return img_name , im.size
+    return img_name, im.size
 
 
 def take_video(filename):
@@ -43,10 +53,10 @@ def take_video(filename):
         cv2.imshow("Take an image hitting Enter, Hit Esc to go out", frame)
 
         k = cv2.waitKey(1)
-        if k%256 == 27:
+        if k % 256 == 27:
             print("Escape hit, closing...")
             break
-        if k%256 == 13:
+        if k % 256 == 13:
             # SPACE pressed
             img_name = "{}_{}.png".format(filename, img_counter)
             cv2.imwrite(img_name, frame)
@@ -56,6 +66,7 @@ def take_video(filename):
 
     cam.release()
     cv2.destroyAllWindows()
+
 
 def take_picture_frames_in_video(filename):
     cam = cv2.VideoCapture(0)
@@ -78,7 +89,7 @@ def take_picture_frames_in_video(filename):
             print("{} written!".format(img_name))
             break
 
-        time.sleep(1/2)
+        time.sleep(1 / 2)
         img_name = "{}_{}.png".format(filename, img_counter)
         print("{} array created!".format(img_name))
         img_counter += 1
@@ -87,3 +98,6 @@ def take_picture_frames_in_video(filename):
     cam.release()
     cv2.destroyAllWindows()
 
+
+if __name__ == "__main__":
+    upload_from_local()
