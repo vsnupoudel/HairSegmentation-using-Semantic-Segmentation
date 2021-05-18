@@ -32,14 +32,15 @@ class TrainOrP:
 
     def get_mask_from_image_upload(self):
         image_uploaded = upload_from_local()
-        image_size = Image.open(image_uploaded).size
+        read_image = Image.open(image_uploaded)
+        image_size = read_image.size
         # resize input image
         arr = self.resize_input_to_model_size(image_uploaded)
         #predict with model
         output = self.model_up.predict(arr)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
-        return output_mask
+        return output_mask , read_image
 
     def get_mask_from_array(self, array_input):
         image = Image.fromarray(array_input, 'RGB')
