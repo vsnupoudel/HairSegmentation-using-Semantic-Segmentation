@@ -36,7 +36,7 @@ class ContinuousPlots:
             maskt = np.expand_dims(maskt, axis=2)
             ax.imshow(np.multiply(array, maskt))
             # ax.imshow(maskt, cmap='gray')
-            plt.pause(1 / 10)
+            plt.pause(1 / 5 )
             ax.cla()
 
         mask , array = self.tp.get_mask_from_local_image(self.tp.image_name + '.png')
