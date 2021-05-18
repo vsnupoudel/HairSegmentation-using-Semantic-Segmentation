@@ -17,11 +17,16 @@ class ContinuousPlots:
         mask = np.array(mask) ; array = np.array(array)
         # Otsu's thresholding
         th, maskt = cv2.threshold(mask, 0.0, 1.0, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        self.return_coloured_mask(maskt)
         maskt = np.expand_dims(maskt, axis=2)
         # print(maskt.shape, array.shape)
         double = Image.fromarray(np.multiply(array, maskt))
         double.save("mask.tiff")
         return double
+
+    def return_coloured_mask(self, maskt):
+        maskc = np.repeat(maskt, 3).reshape(mask.shape[0], mask.shape[1] , 3)
+        maskcolor =
 
 
     def continuos_plots(self):
@@ -49,12 +54,11 @@ class ContinuousPlots:
 
 
 if __name__ == "__main__":
-    # cp = ContinuousPlots()
-    # double = cp.continuos_plots()
-    # plt.imshow(double)
-    # # ax.imshow(maskt, cmap='gray')
-    # plt.show()
-    # Plot mask from upload
-    cp =  ContinuousPlots()
-    double = cp.upload_and_get_mask()
+    import numpy as np
+    mask = np.random.random_integers(0, 255, (256, 256))
+    three = np.repeat(mask, 3).reshape( mask.shape[0], mask.shape[1] ,3)
+    three.where
+    print(three.shape)
+    print(three)
+
 
