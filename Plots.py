@@ -19,8 +19,9 @@ class ContinuousPlots:
         th, maskt = cv2.threshold(mask, 0.0, 1.0, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
         maskt = np.expand_dims(maskt, axis=2)
         # print(maskt.shape, array.shape)
-        plt.imshow(np.multiply(array, maskt))
-        plt.show()
+        double = Image.fromarray(np.multiply(array, maskt))
+        double.save("mask.tiff")
+        return double
 
 
     def continuos_plots(self):
@@ -48,14 +49,12 @@ class ContinuousPlots:
 
 
 if __name__ == "__main__":
-    cp = ContinuousPlots()
-    double = cp.continuos_plots()
-    plt.imshow(double)
-    # ax.imshow(maskt, cmap='gray')
-    plt.show()
-
-
+    # cp = ContinuousPlots()
+    # double = cp.continuos_plots()
+    # plt.imshow(double)
+    # # ax.imshow(maskt, cmap='gray')
+    # plt.show()
     # Plot mask from upload
-    # cp =  ContinuousPlots()
-    # cp.upload_and_get_mask()
+    cp =  ContinuousPlots()
+    double = cp.upload_and_get_mask()
 
