@@ -19,7 +19,7 @@ class TrainOrP:
         self.model_up = load_model('93_Percent_HairSegmentation.h5')
         self.image_name = 'video_image'
 
-    def get_mask_from_picture(self):
+    def get_mask_from_picture(self, input_image):
         # take picture function
         input_image, image_size = take_picture('my_picture')
         # resize input image
@@ -29,6 +29,17 @@ class TrainOrP:
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
         return output_mask
+
+    def get_mask_from_local_image(self, input_image):
+        read_image = Image.open(input_image)
+        image_size = read_image.size
+        # resize input image
+        arr = self.resize_input_to_model_size(input_image)
+        #predict with model
+        output = self.model_up.predict(arr)
+        # get output image same size as input
+        output_mask = self.resize_model_to_input_size(output, image_size)
+        return output_mask, read_image
 
     def get_mask_from_image_upload(self):
         image_uploaded = upload_from_local()

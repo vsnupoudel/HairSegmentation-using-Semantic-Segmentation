@@ -89,7 +89,7 @@ def take_picture_frames_in_video(filename):
             print("{} written!".format(img_name))
             break
 
-        time.sleep(1 / 2)
+        time.sleep(1 / 10)
         img_name = "{}_{}.png".format(filename, img_counter)
         print("{} array created!".format(img_name))
         img_counter += 1
