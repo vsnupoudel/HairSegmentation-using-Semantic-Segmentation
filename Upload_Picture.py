@@ -93,7 +93,7 @@ def take_picture_frames_in_video(filename):
         img_name = "{}_{}.png".format(filename, img_counter)
         print("{} array created!".format(img_name))
         img_counter += 1
-        yield frame, cam
+        yield frame
 
     cam.release()
     cv2.destroyAllWindows()

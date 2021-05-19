@@ -54,7 +54,7 @@ class TrainOrP:
         return output_mask , read_image
 
     def get_mask_from_array(self, array_input):
-        image = Image.fromarray(array_input, 'RGB')
+        image = Image.fromarray(array_input)
         image_size = (array_input.shape[1], array_input.shape[0])
         # resize input image
         resized = self.resize_input_array_to_model_size(image)
