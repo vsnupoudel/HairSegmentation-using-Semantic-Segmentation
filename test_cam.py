@@ -19,10 +19,9 @@ def selected(i):
             cap = cv2.VideoCapture(i)
             test, frame = cap.read()
             if test:
+                print(" &&& =============================================================== &&& \n")
                 print("i : " + str(i) + " /// result: " + str(test))
-
-def selected1(sel):
-    print(sel)
+                print(" &&& =============================================================== &&& \n")
 
 root = Tk()
 root.geometry("500x500")
