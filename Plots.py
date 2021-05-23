@@ -17,19 +17,11 @@ class ContinuousPlots:
         mask = np.array(mask) ; array = np.array(array)
         # Otsu's thresholding
         th, maskt = cv2.threshold(mask, 0.0, 1.0, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
-        self.return_coloured_mask(maskt)
         maskt = np.expand_dims(maskt, axis=2)
         # print(maskt.shape, array.shape)
         double = Image.fromarray(np.multiply(array, maskt))
         double.save("mask.tiff")
         return double
-
-    def return_coloured_mask(self, maskt):
-        red = np.where(maskt==0, 255, maskt)
-        maskc = np.repeat(maskt, 3).reshape(maskt.shape[0], maskt.shape[1] , 3)
-        maskc[:, :,1] = red
-        return maskc
-
 
     def continuos_plots(self):
         fig, ax = self.figure, self.axes
@@ -50,29 +42,29 @@ class ContinuousPlots:
         mask = np.array(mask)
         th, maskt = cv2.threshold(mask, 0.0, 1.0, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
         maskt = np.expand_dims(maskt, axis=2)
-        # ax.imshow(array)
-        # ax.imshow(maskt, alpha=0.5, cmap='OrRd')
-        # plt.savefig("mask.tiff")
+        ax.imshow(array)
+        ax.imshow(maskt, alpha=0.7, cmap='OrRd')
+        fig.savefig("mask.tiff")
 
-        double = Image.fromarray( np.multiply(array, maskt) )
+        double = Image.open("mask.tiff")
+        # double.save("mask.tiff")
+        return double
+
+    def take_a_picture_and_get_mask(self):
+        input_image, maskimg = self.tp.get_mask_from_picture()
+        mask = np.array(maskimg) ; array = np.array(input_image)
+        # Otsu's thresholding
+        th, maskt = cv2.threshold(mask, 0.0, 1.0, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        maskt = np.expand_dims(maskt, axis=2)
+        # print(maskt.shape, array.shape)
+        double = Image.fromarray(np.multiply(array, maskt))
         double.save("mask.tiff")
         return double
 
 
 if __name__ == "__main__":
-    cp = ContinuousPlots()
-    cp.continuos_plots()
-    # plt.imshow(double)
-    # ax.imshow(maskt, cmap='gray')
-    plt.show()
-    # Plot mask from upload
-    # import numpy as np
-    # p = ContinuousPlots()
-    # mask = np.random.random_integers(0, 1, (256, 256))
-    # plt.imshow( p.return_coloured_mask(mask) )
-    # plt.show()
-    # three = np.repeat(mask, 3).reshape( mask.shape[0], mask.shape[1] ,3)
-    # three.where
+    pass
+
 
 
 
