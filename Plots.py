@@ -25,9 +25,8 @@ class ContinuousPlots:
 
     def continuos_plots(self):
         fig, ax = self.figure, self.axes
-
         img_gen = take_picture_frames_in_video(self.tp.image_name)
-        for array in img_gen:
+        for array, cam in img_gen:
             mask = self.tp.get_mask_from_array(array)
             mask = np.array(mask)
             # Otsu's thresholding
@@ -35,7 +34,7 @@ class ContinuousPlots:
             # ax.imshow(np.multiply(array, np.expand_dims(maskt, axis=2) ), cmap='Reds')
             ax.imshow(array)
             ax.imshow(maskt, alpha=0.5, cmap='OrRd')
-            plt.pause(1 / 5)
+            plt.pause(1 / 4 )
             ax.cla()
 
         mask , array = self.tp.get_mask_from_local_image(self.tp.image_name + '.png')
@@ -45,9 +44,10 @@ class ContinuousPlots:
         ax.imshow(array)
         ax.imshow(maskt, alpha=0.7, cmap='OrRd')
         fig.savefig("mask.tiff")
+        plt.close(fig)
+
 
         double = Image.open("mask.tiff")
-        # double.save("mask.tiff")
         return double
 
     def take_a_picture_and_get_mask(self):

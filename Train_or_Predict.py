@@ -28,7 +28,8 @@ class TrainOrP:
         output = self.model_up.predict(arr)
         # get output image same size as input
         output_mask = self.resize_model_to_input_size(output, image_size)
-        return input_image, output_mask
+        pil_image = Image.open(input_image)
+        return pil_image, output_mask
 
     def get_mask_from_local_image(self, input_image):
         read_image = Image.open(input_image)

@@ -13,13 +13,16 @@ def call_video():
 
 def upload_from_device():
     # Plot mask from upload
-    cp = ContinuousPlots()
-    double = cp.upload_and_get_mask()
+    dp = ContinuousPlots()
+    double = dp.upload_and_get_mask()
     plt.imshow(double)
     plt.show()
 
 def take_a_picture():
-    print(2)
+    ep = ContinuousPlots()
+    double = ep.take_a_picture_and_get_mask()
+    plt.imshow(double)
+    plt.show()
 
 def  print_camera_ids():
     cams_test = 500
@@ -30,7 +33,6 @@ def  print_camera_ids():
             print(" &&& =============================================================== &&& \n")
             print("i : " + str(i) + " /// result: " + str(test))
             print(" &&& =============================================================== &&& \n")
-
 
 
 parent = tk.Tk()
