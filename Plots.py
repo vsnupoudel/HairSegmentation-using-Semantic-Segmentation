@@ -1,7 +1,7 @@
 from PIL import Image
 import matplotlib.pyplot as plt
 from Predict import Predict
-from Upload_Picture import take_picture_frames_in_video, upload_from_local
+from Upload_Picture import take_picture_frames_in_video
 import numpy as np
 import cv2
 
