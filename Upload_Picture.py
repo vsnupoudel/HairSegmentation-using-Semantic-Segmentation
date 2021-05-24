@@ -6,14 +6,28 @@ from tkinter import *
 import time
 import numpy as np
 
+"""
+This module has 3 functions to upload the picture using different methods.
+"""
+
 
 def upload_from_local():
+    """
+    Function is called to upload file from local drive
+    :return: A string. The path of the file uploaded.
+    """
     filename = filedialog.askopenfilename(
         initialdir=r'C:\Users\admin\Pictures', title='Select a Image File'
     )
     return filename
 
 def take_picture(filename):
+    """
+    Takes one picture from the default camera.
+    :param filename: a string
+    :return: Just the name of the file that is saved in working directory
+            , The size of the image taken
+    """
     cam = cv2.VideoCapture(0)
     cv2.namedWindow("Take an image hitting Enter, Hit Esc to go out")
     img_counter = 0
@@ -42,6 +56,13 @@ def take_picture(filename):
 
 
 def take_picture_frames_in_video(filename):
+    """
+    Opens the camera and takes a video (does not record). Also Takes frames at discrete times and
+    returns the frame.
+    :param filename: a string
+    :return: 2 objects. a generator which yields a camera frame as an array, and also the
+    cv2.VideoCapture object
+    """
     cam = cv2.VideoCapture(0)
     cv2.namedWindow("Take an image hitting Enter, Hit Esc to go out")
     img_counter = 0
