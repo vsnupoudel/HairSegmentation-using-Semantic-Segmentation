@@ -6,12 +6,20 @@ import tkinter as tk
 import matplotlib.pyplot as plt
 
 def call_video():
+    """
+    Call the vidoe function from ContinousPlots class in the GUI
+    :return: None
+    """
     cp = ContinuousPlots()
     double = cp.continuos_plots()
     plt.imshow(double)
     plt.show()
 
 def upload_from_device():
+    """
+    Call the upload_and_get_mask function from ContinousPlots class in the GUI
+    :return: None
+    """
     # Plot mask from upload
     dp = ContinuousPlots()
     double = dp.upload_and_get_mask()
@@ -19,12 +27,20 @@ def upload_from_device():
     plt.show()
 
 def take_a_picture():
+    """
+    Call the take_a_picture_and_get_mask function from ContinousPlots class in the GUI
+    :return: None
+    """
     ep = ContinuousPlots()
     double = ep.take_a_picture_and_get_mask()
     plt.imshow(double)
     plt.show()
 
 def  print_camera_ids():
+    """
+    Display the ID of cameras available in the device
+    :return:  None
+    """
     cams_test = 500
     for i in range(0, cams_test):
         cap = cv2.VideoCapture(i)
