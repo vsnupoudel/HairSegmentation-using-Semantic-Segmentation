@@ -7,7 +7,7 @@ import PIL as PIL
 from Predict import Predict
 
 
-class TestPredict(unittest.TestCase):
+class TestPredict:
     image_name = 'from_camera'
 
     @pytest.fixture
