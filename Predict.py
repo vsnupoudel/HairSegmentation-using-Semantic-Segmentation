@@ -20,14 +20,14 @@ class Predict:
     3. or from local image path
     """
 
-    def __init__(self, image_path='.', image_name='video_image.png'):
+    def __init__(self, image_path='.', image_name='video_image'):
         """
         :param image_path: string defaults to current working directory.
         :param image_name: string defaults to 'video_image.png'
         """
         self.image_path = image_path
         self.model_up = load_model('93_Percent_HairSegmentation.h5')
-        self.image_name = 'video_image'
+        self.image_name = image_name
 
     def get_mask_from_picture(self):
         """
