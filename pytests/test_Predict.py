@@ -1,4 +1,4 @@
-# import unittest
+import unittest
 import pytest
 import Upload_Picture
 import numpy as np
@@ -7,7 +7,7 @@ import PIL as PIL
 from Predict import Predict
 
 
-class TestPredict:
+class TestPredict(unittest.TestCase):
     image_name = 'from_camera'
 
     @pytest.fixture
